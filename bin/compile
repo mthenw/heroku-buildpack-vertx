@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# fail fast
+set -e
+
+OPENJDK7_URL="https://s3.amazonaws.com/heroku-jvm-langpack-java/openjdk7-u2-heroku-temaki.tar.gz"
+VERTX_URL="http://dl.bintray.com/vertx/downloads/vert.x-2.0.2-final.tar.gz"
+
+BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
+# parse args
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+#create the cache dir if it doesn't exist
+mkdir -p $CACHE_DIR
+
+cd $BUILD_DIR
+if [ -d "$CACHE_DIR/.jdk7" ]; then
+  echo -n "Copying JDK to app directory"
+  cp -r "$CACHE_DIR/.jdk7" $BUILD_DIR
+  echo "done"
+fi
+
+if [ ! -d "$BUILD_DIR/.jdk7" ]; then
+  echo -n "-----> Installing OpenJDK7u2 build (to .jdk7)....."
+  mkdir "$BUILD_DIR/.jdk7"
+  cd "$BUILD_DIR/.jdk7"
+  curl --max-time 180 --location $OPENJDK7_URL | tar xz
+  cd $BUILD_DIR
+  cp -r .jdk7 $CACHE_DIR/.jdk7
+  echo " done"
+fi
+
+if [ -d "$CACHE_DIR/.vertx" ]; then
+  echo -n "Copying Vert.x to app direcotry"
+  cp -r "$CACHE_DIR/.vertx" $BUILD_DIR
+  echo " done"
+fi
+
+if [ ! -d "$BUILD_DIR/.vertx" ]; then
+  echo -n "-----> Installing Vert.x build (to .vertx)....."
+  curl --max-time 320 --location $VERTX_URL | tar xz
+  mv vert* .vertx
+  rm '.vertx/bin/vertx.bat'
+  cd $BUILD_DIR
+  cp -r .vertx $CACHE_DIR/.vertx
+  echo " done"
+fi
+
+cd $BUILD_DIR
+
+export JAVA_HOME="$BUILD_DIR/.jdk7"
+export VERTX_HOME="$BUILD_DIR/.vertx"
+export PATH=$PATH:$JAVA_HOME/bin:$VERTX_HOME/bin
+
+echo "Path is set to"
+echo $PATH
+
+if [ -f compile.sh ]; then
+    echo 'compile.sh file found, executing...'
+    chmod 700 compile.sh
+    ./compile.sh
+fi
+
+# Warn if no Procfile is present
+if [ ! -f Procfile ]; then
+  echo "-----> No Procfile found. Will use the following default process: "
+  echo "       vertx run server.js"
+fi

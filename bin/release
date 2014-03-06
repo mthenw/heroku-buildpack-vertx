@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# bin/release <build-dir>
+
+BUILD_DIR=$1
+
+cat <<EOF
+---
+config_vars:
+  PATH: .jdk7/bin:.vertx/bin:.tools:/usr/local/bin:/usr/bin:/bin
+  JAVA_OPTS: -Xmx384m
+addons:
+  shared-database:5mb
+EOF
+
+if [ ! -f $BUILD_DIR/Procfile ]; then
+cat <<EOF
+default_process_types:
+  web: vertx run server.js
+EOF
+fi
