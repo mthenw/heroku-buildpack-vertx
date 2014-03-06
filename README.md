@@ -1,6 +1,6 @@
 # Heroku buildpack: Vert.x
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpack) for [Vert.X](http://vertx.io/) apps.
+This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpack) for [Vert.x](http://vertx.io/) apps.
 
 Currently it uses following versions:
 
