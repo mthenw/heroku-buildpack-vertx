@@ -23,10 +23,13 @@ Example usage:
 
     $ git push heroku master
 
-    -----> Heroku receiving push
-    -----> Fetching custom build pack... done
+    -----> Fetching custom git buildpack... done
     -----> Vert.x app detected
+
+    -----> Installing OpenJDK7u2..... done
     -----> Installing Vert.x..... done
+
+    -----> Launching... done
 
 This buildpack is based on [tomaslin/heroku-buildpack-vertx-jdk7](https://github.com/tomaslin/heroku-buildpack-vertx-jdk7).
 

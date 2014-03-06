@@ -23,7 +23,7 @@ if [ -d "$CACHE_DIR/.jdk7" ]; then
 fi
 
 if [ ! -d "$BUILD_DIR/.jdk7" ]; then
-  echo -n "-----> Installing OpenJDK7u2 build (to .jdk7)....."
+  echo -n "-----> Installing OpenJDK7u2....."
   mkdir "$BUILD_DIR/.jdk7"
   cd "$BUILD_DIR/.jdk7"
   curl --max-time 180 --location $OPENJDK7_URL | tar xz
@@ -39,7 +39,7 @@ if [ -d "$CACHE_DIR/.vertx" ]; then
 fi
 
 if [ ! -d "$BUILD_DIR/.vertx" ]; then
-  echo -n "-----> Installing Vert.x build (to .vertx)....."
+  echo -n "-----> Installing Vert.x....."
   curl --max-time 320 --location $VERTX_URL | tar xz
   mv vert* .vertx
   rm '.vertx/bin/vertx.bat'
