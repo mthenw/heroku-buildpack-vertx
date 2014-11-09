@@ -5,7 +5,7 @@
 set -e
 
 OPENJDK7_URL="https://s3.amazonaws.com/heroku-jvm-langpack-java/openjdk7-u2-heroku-temaki.tar.gz"
-VERTX_URL="http://dl.bintray.com/vertx/downloads/vert.x-2.1.1.tar.gz"
+VERTX_URL="http://dl.bintray.com/vertx/downloads/vert.x-2.1.4.tar.gz"
 
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args
