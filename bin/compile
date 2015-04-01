@@ -4,7 +4,7 @@
 # fail fast
 set -e
 
-OPENJDK7_URL="https://s3.amazonaws.com/heroku-jvm-langpack-java/openjdk7-u2-heroku-temaki.tar.gz"
+OPENJDK8_URL="http://lang-jvm.s3.amazonaws.com/jdk/openjdk1.8.0_20.tar.gz"
 VERTX_URL="http://dl.bintray.com/vertx/downloads/vert.x-2.1.4.tar.gz"
 
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
@@ -16,19 +16,19 @@ CACHE_DIR=$2
 mkdir -p $CACHE_DIR
 
 cd $BUILD_DIR
-if [ -d "$CACHE_DIR/.jdk7" ]; then
+if [ -d "$CACHE_DIR/.jdk8" ]; then
   echo -n "Copying JDK to app directory"
-  cp -r "$CACHE_DIR/.jdk7" $BUILD_DIR
+  cp -r "$CACHE_DIR/.jdk8" $BUILD_DIR
   echo "done"
 fi
 
-if [ ! -d "$BUILD_DIR/.jdk7" ]; then
-  echo -n "-----> Installing OpenJDK7u2....."
-  mkdir "$BUILD_DIR/.jdk7"
-  cd "$BUILD_DIR/.jdk7"
-  curl --max-time 180 --location $OPENJDK7_URL | tar xz
+if [ ! -d "$BUILD_DIR/.jdk8" ]; then
+  echo -n "-----> Installing OpenJDK8u20....."
+  mkdir "$BUILD_DIR/.jdk8"
+  cd "$BUILD_DIR/.jdk8"
+  curl --max-time 180 --location $OPENJDK8_URL | tar xz
   cd $BUILD_DIR
-  cp -r .jdk7 $CACHE_DIR/.jdk7
+  cp -r .jdk8 $CACHE_DIR/.jdk8
   echo " done"
 fi
 
@@ -50,7 +50,7 @@ fi
 
 cd $BUILD_DIR
 
-export JAVA_HOME="$BUILD_DIR/.jdk7"
+export JAVA_HOME="$BUILD_DIR/.jdk8"
 export VERTX_HOME="$BUILD_DIR/.vertx"
 export PATH=$PATH:$JAVA_HOME/bin:$VERTX_HOME/bin
 
