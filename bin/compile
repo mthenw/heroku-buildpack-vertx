@@ -5,7 +5,7 @@
 set -e
 
 OPENJDK8_URL="http://lang-jvm.s3.amazonaws.com/jdk/openjdk1.8.0_20.tar.gz"
-VERTX_URL="http://dl.bintray.com/vertx/downloads/vert.x-2.1.5.tar.gz"
+VERTX_URL="http://dl.bintray.com/vertx/downloads/vert.x-3.0.0-milestone3.tar.gz"
 
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args

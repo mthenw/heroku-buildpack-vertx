@@ -5,7 +5,7 @@ This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpack) for
 Currently it uses following versions:
 
 * JDK **1.8**
-* Vert.x **2.1.5**
+* Vert.x **3.0.0-milestone3**
 
 ## Usage
 
