@@ -19,7 +19,7 @@ Example usage:
     $ ls
     mod.json server.js
 
-    $ heroku create --buildpack https://github.com/mthenw/heroku-buildpack-vertx.git
+    $ heroku create --buildpack https://github.com/mthenw/heroku-buildpack-vertx.git#v3
 
     $ git push heroku master
 
