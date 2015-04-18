@@ -31,8 +31,6 @@ Example usage:
 
     -----> Launching... done
 
-This buildpack is based on [tomaslin/heroku-buildpack-vertx-jdk7](https://github.com/tomaslin/heroku-buildpack-vertx-jdk7).
-
 ## License
 
 MIT

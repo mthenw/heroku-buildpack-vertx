@@ -4,10 +4,8 @@
 # fail fast
 set -e
 
-OPENJDK8_URL="http://lang-jvm.s3.amazonaws.com/jdk/openjdk1.8.0_20.tar.gz"
 VERTX_URL="http://dl.bintray.com/vertx/downloads/vert.x-3.0.0-milestone3.tar.gz"
 
-BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -15,22 +13,15 @@ CACHE_DIR=$2
 #create the cache dir if it doesn't exist
 mkdir -p $CACHE_DIR
 
-cd $BUILD_DIR
-if [ -d "$CACHE_DIR/.jdk8" ]; then
-  echo -n "Copying JDK to app directory"
-  cp -r "$CACHE_DIR/.jdk8" $BUILD_DIR
-  echo "done"
-fi
+# download the buildpack
+JVM_COMMON_BUILDPACK=${JVM_COMMON_BUILDPACK:-https://codon-buildpacks.s3.amazonaws.com/buildpacks/heroku/jvm-common.tgz}
+mkdir -p /tmp/jvm-common
+curl --silent --location $JVM_COMMON_BUILDPACK | tar xzm -C /tmp/jvm-common --strip-components=1
+. /tmp/jvm-common/bin/util
+. /tmp/jvm-common/bin/java
 
-if [ ! -d "$BUILD_DIR/.jdk8" ]; then
-  echo -n "-----> Installing OpenJDK8u20....."
-  mkdir "$BUILD_DIR/.jdk8"
-  cd "$BUILD_DIR/.jdk8"
-  curl --max-time 180 --location $OPENJDK8_URL | tar xz
-  cd $BUILD_DIR
-  cp -r .jdk8 $CACHE_DIR/.jdk8
-  echo " done"
-fi
+# install JDK
+install_java ${BUILD_DIR} 1.8
 
 if [ -d "$CACHE_DIR/.vertx" ]; then
   echo -n "Copying Vert.x to app direcotry"
@@ -56,12 +47,6 @@ export PATH=$PATH:$JAVA_HOME/bin:$VERTX_HOME/bin
 
 echo "Path is set to"
 echo $PATH
-
-if [ -f compile.sh ]; then
-    echo 'compile.sh file found, executing...'
-    chmod 700 compile.sh
-    ./compile.sh
-fi
 
 # Warn if no Procfile is present
 if [ ! -f Procfile ]; then
