@@ -6,8 +6,6 @@ BUILD_DIR=$1
 cat <<EOF
 ---
 config_vars:
-  PATH: .jdk8/bin:.vertx/bin:.tools:/usr/local/bin:/usr/bin:/bin
-  JAVA_OPTS: -Xmx384m
 EOF
 
 if [ ! -f $BUILD_DIR/Procfile ]; then
