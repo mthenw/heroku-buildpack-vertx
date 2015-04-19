@@ -6,6 +6,7 @@ BUILD_DIR=$1
 cat <<EOF
 ---
 config_vars:
+  PATH: .vertx/bin
 EOF
 
 if [ ! -f $BUILD_DIR/Procfile ]; then
