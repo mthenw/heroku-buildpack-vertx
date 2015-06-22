@@ -1,5 +1,7 @@
 # Heroku buildpack: Vert.x
 
+**This repository is no longer actively maintained. I suggest using docker plugin for heroku.**
+
 This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpack) for [Vert.x](http://vertx.io/) apps. Example application [vertx-sample](https://github.com/mthenw/vertx-sample).
 
 Currently it uses following versions:
